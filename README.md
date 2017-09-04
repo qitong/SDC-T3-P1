@@ -1,2 +1,4 @@
-# SDC-T3-P1
-Udacity Path Planning Project
+# CarND-Path-Planning-Project
+Self-Driving Car Engineer Nanodegree Program
+
+## Begin Tuning
