@@ -26,23 +26,23 @@ The code from the video mainly solves the "driving" problem by itself.
 I implement my own finite state machine to solve the change lane problem.
 It is a little difference from the course suggestion. Here is my strategy:
 
-There are total 6 states in my FSM:
-0 = Keep Lane 0, 
-1 = Keep Lane 1 (Start State)
-2 = Keep Lane 2
-3 = Prepare Lane 0->1
-4 = Prepare Lane 1->0
-5 = Prepare Lane 1->2
-6 = Prepare Lane 2->1
+There are total 6 states in my FSM:  
+* 0 = Keep Lane 0, 
+* 1 = Keep Lane 1 (Start State)
+* 2 = Keep Lane 2
+* 3 = Prepare Lane 0->1
+* 4 = Prepare Lane 1->0
+* 5 = Prepare Lane 1->2
+* 6 = Prepare Lane 2->1  
 in which the left lane is Lane 0, middle lane is Lane 1 and right lane is Lane 2.
 
-Action:
-a = Keep Lane: No car in front of me in change_lane_perspect distance in my lane OR for lane 1 has car in front of me in my lane but still the openest lane
-b = Prepare for Lane changing: Has car in front of me in change_lane_perspect distance in my lane (for lane 0 and lane 2)
-c = In lane 1, has car in front of me in change_lane_perspect distance in my lane and lane 0 is the openest lane 
-d = In lane 1, has car in front of me in change_lane_perspect distance in my lane and lane 2 is the openest lane
-e = Unsafe to change
-f = Safe to change lane
+Action:  
+* a = Keep Lane: No car in front of me in change_lane_perspect distance in my lane OR for lane 1 has car in front of me in my lane but still the openest lane
+* b = Prepare for Lane changing: Has car in front of me in change_lane_perspect distance in my lane (for lane 0 and lane 2)
+* c = In lane 1, has car in front of me in change_lane_perspect distance in my lane and lane 0 is the openest lane 
+* d = In lane 1, has car in front of me in change_lane_perspect distance in my lane and lane 2 is the openest lane
+* e = Unsafe to change
+* f = Safe to change lane  
 in which, openest means that the front car in that lane is farmost in all 3 lanes; safe to change means that the front and rear space in the target lane is big enough (defined by front_safe_distance and rear_safe_distance respectively).
 
 I didn't use Prepare Left Lane Change nor Prepare Right Lane Change, but rather define those 3 lanes individually. Since the road is simple in this case, Lane 0 (left) and Lane 2 (right) has only 1 change lane choice respectively, it can only choose to keep lane & slow down or change to Lane 1, the choice is straightforward -- when it is safe, change; on the other hand, Lane 1 has 3 choices, keep lane & slow down, change to Lane 2 and change to Lane 0, I used to implemented it to choose left first (according to my own custom), but found it stucks in traffic a lot, then I made 3 changes to solve the problem: 1. make the change_lane_perspect to 50 instead of 30, prepare before stucking 2. make the safe judgement more aggresive (rear_safe_distance from 20 to 10 and slow_down_threshold from 30 to 15)  3.change to the lane that is openest.
