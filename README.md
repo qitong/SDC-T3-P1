@@ -26,6 +26,8 @@ The code from the video mainly solves the "driving" problem by itself.
 I implement my own finite state machine to solve the change lane problem.
 It is a little difference from the course suggestion. Here is my strategy:
 
+![](https://github.com/qitong/SDC-T3-P1/raw/master/output/fsm.jpeg)  
+
 There are total 6 states in my FSM:  
 * 0 = Keep Lane 0, 
 * 1 = Keep Lane 1 (Start State)
@@ -48,6 +50,4 @@ in which, openest means that the front car in that lane is farmost in all 3 lane
 I didn't use Prepare Left Lane Change nor Prepare Right Lane Change, but rather define those 3 lanes individually. Since the road is simple in this case, Lane 0 (left) and Lane 2 (right) has only 1 change lane choice respectively, it can only choose to keep lane & slow down or change to Lane 1, the choice is straightforward -- when it is safe, change; on the other hand, Lane 1 has 3 choices, keep lane & slow down, change to Lane 2 and change to Lane 0, I used to implemented it to choose left first (according to my own custom), but found it stucks in traffic a lot, then I made 3 changes to solve the problem: 1. make the change_lane_perspect to 50 instead of 30, prepare before stucking 2. make the safe judgement more aggresive (rear_safe_distance from 20 to 10 and slow_down_threshold from 30 to 15)  3.change to the lane that is openest.
 
 The following is the video of path planning project.
-
-![](https://github.com/qitong/SDC-T3-P1/raw/master/output/fsm.jpeg)  
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/YfMcGAV4PJI/0.jpg)](https://www.youtube.com/watch?v=YfMcGAV4PJI&feature=youtu.be)
